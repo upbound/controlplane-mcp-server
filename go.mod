@@ -6,6 +6,7 @@ require (
 	github.com/alecthomas/kong v1.12.0
 	github.com/crossplane/crossplane-runtime v1.18.0
 	github.com/crossplane/function-sdk-go v0.4.0
+	github.com/google/go-cmp v0.7.0
 	github.com/mark3labs/mcp-go v0.32.0
 	go.uber.org/zap v1.27.0
 	k8s.io/api v0.33.0
@@ -31,7 +32,6 @@ require (
 	github.com/gogo/protobuf v1.3.2 // indirect
 	github.com/google/btree v1.1.3 // indirect
 	github.com/google/gnostic-models v0.6.9 // indirect
-	github.com/google/go-cmp v0.7.0 // indirect
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/josharian/intern v1.0.0 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
