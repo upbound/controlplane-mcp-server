@@ -7,14 +7,14 @@ import (
 	"k8s.io/apimachinery/pkg/types"
 )
 
-const getPodLogs = "get_pod_logs"
+const getPodEvents = "get_pod_events"
 
-// GetPodLogs creates a new mcp.Tool for retrieving pods logs from the matching
+// GetPodEvents creates a new mcp.Tool for retrieving pods events from the matching
 // pod details provided as parameters.
-func GetPodLogs() mcp.Tool {
-	return mcp.NewTool(getPodLogs,
+func GetPodEvents() mcp.Tool {
+	return mcp.NewTool(getPodEvents,
 		mcp.WithDescription(`
-Read the logs of the given container of the given Kubernetes pod in the given namespace.
+Read the events of the given Kubernetes pod in the given namespace.
 `),
 		mcp.WithString("namespace",
 			mcp.Required(),
@@ -30,9 +30,9 @@ Read the logs of the given container of the given Kubernetes pod in the given na
 	)
 }
 
-// GetPodLogsHander handles tool requests to retrieve pod logs.
-func (s *Server) GetPodLogsHander(ctx context.Context, req mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-	log := s.log.WithValues("handler", getPodLogs)
+// GetPodEventsHander handles tool requests to retrieve pod events.
+func (s *Server) GetPodEventsHander(ctx context.Context, req mcp.CallToolRequest) (*mcp.CallToolResult, error) {
+	log := s.log.WithValues("handler", getPodEvents)
 	log.Debug("received request")
 
 	// helper functions for type-safe argument access
@@ -46,10 +46,10 @@ func (s *Server) GetPodLogsHander(ctx context.Context, req mcp.CallToolRequest) 
 		return mcp.NewToolResultError(err.Error()), nil
 	}
 
-	logs, err := s.pod.GetLogs(ctx, types.NamespacedName{Namespace: ns, Name: name})
+	events, err := s.pod.GetEvents(ctx, types.NamespacedName{Namespace: ns, Name: name})
 	if err != nil {
 		return mcp.NewToolResultError(err.Error()), nil
 	}
 
-	return mcp.NewToolResultText(string(logs)), nil
+	return mcp.NewToolResultText(string(events)), nil
 }
