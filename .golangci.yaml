@@ -1,0 +1,161 @@
+version: "2"
+output:
+  formats:
+    text:
+      path: stderr
+linters:
+  default: all
+  disable:
+    - cyclop
+    - dupl
+    - err113
+    - exhaustruct
+    - funlen
+    - gocyclo
+    - godox
+    - gomoddirectives
+    - ireturn
+    - lll
+    - maintidx
+    - mnd
+    - nestif
+    - nilnil
+    - nlreturn
+    - nonamedreturns
+    - paralleltest
+    - perfsprint
+    - testpackage
+    - varnamelen
+    - wrapcheck
+    - wsl
+  settings:
+    depguard:
+      rules:
+        no_third_party_test_libraries:
+          list-mode: lax
+          files:
+            - $test
+          deny:
+            - pkg: github.com/stretchr/testify
+              desc: See https://go.dev/wiki/TestComments#assert-libraries
+            - pkg: github.com/onsi/ginkgo
+              desc: See https://go.dev/wiki/TestComments#assert-libraries
+            - pkg: github.com/onsi/gomega
+              desc: See https://go.dev/wiki/TestComments#assert-libraries
+    dupl:
+      threshold: 100
+    errcheck:
+      check-type-assertions: false
+      check-blank: false
+    goconst:
+      min-len: 3
+      min-occurrences: 5
+    gocritic:
+      enabled-tags:
+        - performance
+      settings:
+        captLocal:
+          paramsOnly: true
+        rangeValCopy:
+          sizeThreshold: 32
+    govet:
+      disable:
+        - shadow
+    interfacebloat:
+      max: 5
+    lll:
+      tab-width: 1
+    nakedret:
+      max-func-lines: 30
+    nolintlint:
+      require-explanation: true
+      require-specific: true
+    prealloc:
+      simple: true
+      range-loops: true
+      for-loops: false
+    tagliatelle:
+      case:
+        rules:
+          json: goCamel
+    unparam:
+      check-exported: false
+    unused:
+      exported-fields-are-used: true
+  exclusions:
+    generated: lax
+    rules:
+      - linters:
+          - containedctx
+          - errcheck
+          - forcetypeassert
+          - gochecknoglobals
+          - gochecknoinits
+          - gocognit
+          - gosec
+          - scopelint
+          - unparam
+        path: _test(ing)?\.go
+      - linters:
+          - gocritic
+        path: _test\.go
+        text: (unnamedResult|exitAfterDefer)
+      - linters:
+          - gochecknoglobals
+          - gochecknoinits
+        path: apis/
+      - linters:
+          - gocritic
+        text: '(hugeParam|rangeValCopy):'
+      - linters:
+          - staticcheck
+        text: 'SA3000:'
+      - linters:
+          - gosec
+        text: 'G101:'
+      - linters:
+          - gosec
+        text: 'G104:'
+      - linters:
+          - gosec
+        text: 'G601:'
+      - linters:
+          - musttag
+        path: k8s.io/
+    paths:
+      - zz_generated\..+\.go$
+      - .+\.pb.go$
+      - third_party$
+      - builtin$
+      - examples$
+issues:
+  max-issues-per-linter: 0
+  max-same-issues: 0
+  new-from-rev: HEAD
+  new: true
+formatters:
+  enable:
+    - gci
+    - gofmt
+    - gofumpt
+    - goimports
+  settings:
+    gci:
+      sections:
+        - standard
+        - default
+        - prefix(github.com/crossplane)
+        - prefix(github.com/upbound)
+        - blank
+        - dot
+      custom-order: true
+    gofmt:
+      simplify: true
+  exclusions:
+    generated: lax
+    paths:
+      - zz_generated\..+\.go$
+      - .+\.pb.go$
+      - third_party$
+      - builtin$
+      - examples$

@@ -1,3 +1,3 @@
 module github.com/upbound/controlplane-mcp-server
 
-go 1.23.10
+go 1.24.0
