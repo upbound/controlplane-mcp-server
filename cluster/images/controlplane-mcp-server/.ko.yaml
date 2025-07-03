@@ -10,5 +10,4 @@ builds:
   main: ./cmd/controlplane-mcp-server
   ldflags:
   - -s -w
-  - -X github.com/upbound/connect/internal/version.version={{.Env.VERSION}}
-  - -X github.com/upbound/connect/pkg/request/middleware.instrumentationName={{.Env.OTEL_INSTRUMENTATION_NAME}}
+  - -X github.com/upbound/controlplane-mcp-server/internal/version.version={{.Env.VERSION}}
