@@ -127,10 +127,6 @@ func (p *Pod) GetEvents(ctx context.Context, nn types.NamespacedName) ([]byte, e
 			continue
 		}
 
-		if seen > 1 {
-			sb.WriteString(",")
-		}
-
 		sb.WriteString(s)
 		seen++
 	}
