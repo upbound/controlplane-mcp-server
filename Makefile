@@ -176,3 +176,9 @@ cluster.up: create.cluster create.xp
 cluster.down: delete.cluster
 
 restart: cluster.down cluster.up
+
+# ====================================================================================
+# Testing
+# Run go unit tests.
+test.short:
+	@$(GO) test -short -cover $(shell $(GO) list ./... | grep -v test\/e2e)
