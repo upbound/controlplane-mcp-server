@@ -71,8 +71,10 @@ func main() {
 	clientset, err := kubernetes.NewForConfig(cfg)
 	kongCtx.FatalIfErrorf(err, "failed to construct clientset")
 
-	ts := tool.NewServer(clientset)
+	// Set up tools and corresponding handlers.
+	ts := tool.NewServer(clientset, tool.WithLogging(log))
 	s.AddTool(tool.GetPodLogs(), ts.GetPodLogsHander)
+	s.AddTool(tool.GetPodEvents(), ts.GetPodEventsHander)
 
 	ss := server.NewStreamableHTTPServer(s)
 
