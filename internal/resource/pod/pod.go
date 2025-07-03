@@ -31,7 +31,7 @@ const (
 // controlplane.
 type Pod struct {
 	log logging.Logger
-	c   *kubernetes.Clientset
+	cs  kubernetes.Interface
 
 	// maximum number of events to return to the caller.
 	maxEvents int
@@ -57,9 +57,9 @@ func WithMaxEvents(m int) Option {
 }
 
 // New constructs a new Pod.
-func New(c *kubernetes.Clientset, opts ...Option) *Pod {
+func New(cs kubernetes.Interface, opts ...Option) *Pod {
 	p := &Pod{
-		c:   c,
+		cs:  cs,
 		log: logging.NewNopLogger(),
 
 		maxEvents:   defaultMaxEvents,
@@ -76,7 +76,7 @@ func New(c *kubernetes.Clientset, opts ...Option) *Pod {
 // GetLogs returns the logs from the supplied Pod up to the maximum number of
 // log lines.
 func (p *Pod) GetLogs(ctx context.Context, nn types.NamespacedName) ([]byte, error) {
-	req := p.c.CoreV1().Pods(nn.Namespace).GetLogs(nn.Name, &corev1.PodLogOptions{
+	req := p.cs.CoreV1().Pods(nn.Namespace).GetLogs(nn.Name, &corev1.PodLogOptions{
 		TailLines: ptr.To(p.maxLogLines),
 	})
 	logs, err := req.Stream(ctx)
@@ -99,12 +99,12 @@ func (p *Pod) GetLogs(ctx context.Context, nn types.NamespacedName) ([]byte, err
 // GetEvents returns the events for the correlated to the supplied pod up to
 // the maximum number of events.
 func (p *Pod) GetEvents(ctx context.Context, nn types.NamespacedName) ([]byte, error) {
-	pod, err := p.c.CoreV1().Pods(nn.Namespace).Get(ctx, nn.Name, metav1.GetOptions{})
+	pod, err := p.cs.CoreV1().Pods(nn.Namespace).Get(ctx, nn.Name, metav1.GetOptions{})
 	if err != nil {
 		return nil, errors.Wrap(err, "failed to look up pod")
 	}
 
-	eventList, err := p.c.CoreV1().Events(nn.Namespace).List(ctx, metav1.ListOptions{
+	eventList, err := p.cs.CoreV1().Events(nn.Namespace).List(ctx, metav1.ListOptions{
 		FieldSelector: fields.OneTermEqualSelector("involvedObject.name", pod.GetName()).String(),
 	})
 	if err != nil {
