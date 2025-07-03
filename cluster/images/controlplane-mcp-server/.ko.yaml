@@ -5,9 +5,9 @@ defaultPlatforms:
 defaultBaseImage: us-west1-docker.pkg.dev/orchestration-build/base/static
 
 builds:
-- id: mcp
+- id: controlplane-mcp-server
   dir: .
-  main: ./cmd/mcp
+  main: ./cmd/controlplane-mcp-server
   ldflags:
   - -s -w
   - -X github.com/upbound/connect/internal/version.version={{.Env.VERSION}}

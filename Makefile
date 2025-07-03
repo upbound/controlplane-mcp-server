@@ -118,7 +118,7 @@ ko.publish: $(KO)
 	@$(INFO) building Go artifacts using ko
 	@for registry in $(REGISTRY_ORGS); do \
 		$(INFO) "Publishing to $$registry"; \
-			VERSION=$(VERSION) ./hack/helpers/kobuild.sh $$registry mcp ./cmd/controlplane-mcp-server; \
+			VERSION=$(VERSION) ./hack/helpers/kobuild.sh $$registry controlplane-mcp-server ./cmd/controlplane-mcp-server; \
 		$(OK) "Published to $$registry"; \
 	done
 	@$(OK) built Go artifacts using ko
