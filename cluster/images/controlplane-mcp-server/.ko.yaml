@@ -10,4 +10,4 @@ builds:
   main: ./cmd/controlplane-mcp-server
   ldflags:
   - -s -w
-  - -X github.com/upbound/controlplane-mcp-server/internal/version.version={{.Env.VERSION}}
+  - -X github.com/upbound/controlplane-mcp-server/main.version={{.Env.VERSION}}
