@@ -182,3 +182,16 @@ restart: cluster.down cluster.up
 # Run go unit tests.
 test.short:
 	@$(GO) test -short -cover $(shell $(GO) list ./... | grep -v test\/e2e)
+
+# ====================================================================================
+# Local dev
+
+# Run the MCP Inspector
+# The mcp server uses a KUBECONFIG for auth to the k8s api-server, but does not
+# protect the individual endpoints.
+inspector:
+	@DANGEROUSLY_OMIT_AUTH=true npx @modelcontextprotocol/inspector
+
+# Run the ControlPlane MCP Server locally
+runmcp:
+	@$(GO) run ./cmd/controlplane-mcp-server/...
