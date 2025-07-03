@@ -1,0 +1,7 @@
+# Creates a registry called ctlptl-registry available on 127.0.0.1:5001
+apiVersion: ctlptl.dev/v1alpha1
+kind: Registry
+name: ctlptl-registry
+port: 5001
+listenAddress: 127.0.0.1
+image: us-west1-docker.pkg.dev/orchestration-build/connect/secure-registry:main
