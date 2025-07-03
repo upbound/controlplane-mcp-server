@@ -1,0 +1,14 @@
+defaultPlatforms:
+- linux/arm64
+- linux/amd64
+
+defaultBaseImage: us-west1-docker.pkg.dev/orchestration-build/base/static
+
+builds:
+- id: mcp
+  dir: .
+  main: ./cmd/mcp
+  ldflags:
+  - -s -w
+  - -X github.com/upbound/connect/internal/version.version={{.Env.VERSION}}
+  - -X github.com/upbound/connect/pkg/request/middleware.instrumentationName={{.Env.OTEL_INSTRUMENTATION_NAME}}

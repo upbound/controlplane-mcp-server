@@ -123,6 +123,7 @@ ko.publish: $(KO)
 	done
 	@$(OK) built Go artifacts using ko
 
+publish.artifacts: ko.publish
 # run `make help` to see the targets and options
 
 # Update the submodules, such as the common build scripts.
