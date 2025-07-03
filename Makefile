@@ -181,7 +181,7 @@ restart: cluster.down cluster.up
 # Testing
 # Run go unit tests.
 test.short:
-	@$(GO) test -short -cover $(shell $(GO) list ./... | grep -v test\/e2e)
+	$(GO) test -short -cover -shuffle on $(shell $(GO) list ./...)
 
 # ====================================================================================
 # Local dev
