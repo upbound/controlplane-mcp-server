@@ -21,7 +21,6 @@ PLATFORMS ?= linux_amd64 linux_arm64
 
 KIND_VERSION = v0.26.0
 KUBECTL_VERSION = v1.31.0
-GOLANGCILINT_VERSION = 2.1.6
 HELM3_VERSION = v3.16.4
 
 KIND_CLUSTER_NAME=ctp-mcp-server
@@ -47,7 +46,7 @@ HELM_VALUES_TEMPLATE_SKIPPED = true
 NPROCS ?= 1
 
 GO_REQUIRED_VERSION = 1.24
-GOLANGCILINT_VERSION = 2.1.6
+GOLANGCILINT_VERSION = 2.2.0
 GO111MODULE = on
 GO_NOCOV = true
 GO_SUBDIRS = cmd
@@ -181,7 +180,7 @@ restart: cluster.down cluster.up
 # Testing
 # Run go unit tests.
 test.short:
-	@$(GO) test -short -cover $(shell $(GO) list ./... | grep -v test\/e2e)
+	$(GO) test -short -cover -shuffle on $(shell $(GO) list ./...)
 
 # ====================================================================================
 # Local dev

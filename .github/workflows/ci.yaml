@@ -17,7 +17,7 @@ on:
 env:
   # Common versions
   GO_VERSION: '1.24.2'
-  GOLANGCI_VERSION: 'v2.1.6'
+  GOLANGCI_VERSION: 'v2.2.0'
   DOCKER_BUILDX_VERSION: 'v0.10.0'
   XPKG_ACCESS_ID: ${{ secrets.XPKG_ACCESS_ID }}
 
@@ -56,7 +56,7 @@ jobs:
       # this action because it leaves 'annotations' (i.e. it comments on PRs to
       # point out linter violations).
       - name: Lint
-        uses: golangci/golangci-lint-action@a4f60bb28d35aeee14e6880718e0c85ff1882e64 # v6
+        uses: golangci/golangci-lint-action@4afd733a84b1f43292c63897423277bb7f4313a9 # v8
         with:
           version: ${{ env.GOLANGCI_VERSION }}
 

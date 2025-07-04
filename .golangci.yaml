@@ -21,6 +21,7 @@ linters:
     - nestif
     - nilnil
     - nlreturn
+    - noinlineerr
     - nonamedreturns
     - paralleltest
     - perfsprint
@@ -28,6 +29,7 @@ linters:
     - varnamelen
     - wrapcheck
     - wsl
+    - wsl_v5
   settings:
     depguard:
       rules:
