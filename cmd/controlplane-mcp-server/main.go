@@ -5,6 +5,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 
 	"github.com/alecthomas/kong"
 	"github.com/mark3labs/mcp-go/server"
@@ -16,8 +17,16 @@ import (
 
 	"github.com/crossplane/function-sdk-go/logging"
 
+	"github.com/upbound/controlplane-mcp-server/internal/bootcheck"
 	"github.com/upbound/controlplane-mcp-server/internal/tool"
 )
+
+func init() { //nolint:gochecknoinits // init is needed for the bootcheck to happen first.
+	err := bootcheck.CheckEnv()
+	if err != nil {
+		log.Fatalf("bootcheck failed. server will not be started: %v", err)
+	}
+}
 
 const (
 	version = "0.0.1"
