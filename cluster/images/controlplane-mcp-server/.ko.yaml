@@ -9,8 +9,7 @@ builds:
   dir: .
   main: ./cmd/controlplane-mcp-server
   flags:
-  - -tags
-  - {{.Env.GO_BUILD_TAG}}
+  - -tags={{.Env.GO_BUILD_TAG}}
   ldflags:
   - -s -w
   - -X github.com/upbound/controlplane-mcp-server/main.version={{.Env.VERSION}}

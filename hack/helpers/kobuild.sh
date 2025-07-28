@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -e
+set -ex
 
 _registry=$1
 _ko_yaml_path=cluster/images/$2
@@ -8,6 +8,7 @@ _go_import_path=$3
 _bare=$4
 
 _version=${VERSION}
+_git_build_tag=${GO_BUILD_TAG}
 _push=true
 
 unset GOOS
