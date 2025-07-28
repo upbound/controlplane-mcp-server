@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -e
+set -ex
 
 _registry=$1
 _ko_yaml_path=cluster/images/$2
@@ -8,7 +8,7 @@ _go_import_path=$3
 _bare=$4
 
 _version=${VERSION}
-_git_build_tag=$(GO_BUILD_TAG)
+_git_build_tag=${GO_BUILD_TAG}
 _push=true
 
 unset GOOS
@@ -34,5 +34,5 @@ echo $KO_DOCKER_REPO
 #                   setting allows us to have more predictable names for the
 #                   OCI images.
 # Ref: https://ko.build/reference/ko_build/
-IMAGE=$(VERSION=$_version GO_BUILD_TAG=$_git_build_tag KO_CONFIG_PATH=${_ko_yaml_path}/.ko.yaml $KO build $_go_import_path --tags=$_version --push=$_push -B)
+IMAGE=$(KO_CONFIG_PATH=${_ko_yaml_path}/.ko.yaml $KO build $_go_import_path --tags=$_version --push=$_push -B)
 echo $IMAGE
