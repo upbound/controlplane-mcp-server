@@ -32,7 +32,7 @@ export REGISTRY_ORGS ?= xpkg.upbound.io/upbound
 USE_HELM3 = true
 HELM_BASE_URL = https://charts.upbound.io
 HELM_S3_BUCKET = upbound.charts
-HELM_CHARTS = nothing
+HELM_CHARTS = controlplane-mcp-server
 HELM_VALUES_TEMPLATE_SKIPPED = true
 
 -include build/makelib/k8s_tools.mk
@@ -195,3 +195,8 @@ inspector:
 # Run the ControlPlane MCP Server locally
 runmcp:
 	@$(GO) run ./cmd/controlplane-mcp-server/...
+
+# ====================================================================================
+# CI
+helm.version:
+	@echo $(HELM_CHART_VERSION)

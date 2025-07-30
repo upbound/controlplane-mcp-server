@@ -1,0 +1,13 @@
+apiVersion: meta.pkg.upbound.io/v1beta1
+kind: AddOn
+metadata:
+  annotations:
+    friendly-name.meta.crossplane.io: AddOn ControlPlane MCP Server
+    meta.crossplane.io/description: |
+      Upbound AddOn package deploys a single deploymentruntimeconfig
+    meta.crossplane.io/maintainer: Upbound Maintainers <info@upbound.io>
+  name: controlplane-mcp-server
+spec:
+  packagingType: Helm
+  helm:
+    releaseName: controlplane-mcp-server
