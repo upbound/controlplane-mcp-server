@@ -184,6 +184,11 @@ test.short:
 	$(GO) test -short -cover -shuffle on $(shell $(GO) list ./...)
 
 # ====================================================================================
+# CI
+helm.version:
+	@echo $(HELM_CHART_VERSION)
+
+# ====================================================================================
 # Local dev
 
 # Run the MCP Inspector
@@ -195,8 +200,3 @@ inspector:
 # Run the ControlPlane MCP Server locally
 runmcp:
 	@$(GO) run ./cmd/controlplane-mcp-server/...
-
-# ====================================================================================
-# CI
-helm.version:
-	@echo $(HELM_CHART_VERSION)
