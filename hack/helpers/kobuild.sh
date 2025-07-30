@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -ex
+set -e
 
 _registry=$1
 _ko_yaml_path=cluster/images/$2

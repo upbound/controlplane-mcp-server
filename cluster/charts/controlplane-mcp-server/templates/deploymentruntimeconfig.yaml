@@ -1,0 +1,37 @@
+apiVersion: pkg.crossplane.io/v1beta1
+kind: DeploymentRuntimeConfig
+metadata:
+  name: ctp-mcp
+spec:
+  serviceAccountTemplate:
+    metadata:
+      # We need to provide additional permissions to the function. In order to
+      # do that we create a deterministic ServiceAccount name.
+      name: {{ .Values.serviceAccount.name }}
+  deploymentTemplate:
+    spec:
+      selector: {}
+      template:
+        spec:
+          containers:
+          - name: package-runtime
+            args:
+            {{- with .Values.extraArgs.packageRuntime }}
+              {{- toYaml . | nindent 12 }}
+            {{- end }}
+            env:
+            # Inform the function of the CTP1 MCP Server.
+            # transport: http-stream indicates that we'll communicate with the
+            # MCP server over StreamableHTTP.
+            - name: MCP_SERVER_TOOL_CTP1_TRANSPORT
+              value: http-stream
+            # baseURL indicates which address and endpoint to reach out to for
+            # tooling.
+            - name: MCP_SERVER_TOOL_CTP1_BASEURL
+              value: http://localhost:8080/mcp
+          - name: controlplane-mcp-server
+            image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default (ternary .Chart.AppVersion (printf "v%s" .Chart.AppVersion) (hasPrefix "v" .Chart.AppVersion)) }}"
+            args:
+            {{- with .Values.extraArgs.controlplaneMcpServer }}
+              {{- toYaml . | nindent 12 }}
+            {{- end }}

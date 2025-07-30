@@ -1,0 +1,19 @@
+---
+# log-and-event-reader provides sufficient yet narrow scoped permissions for
+# reading pod logs and events related to the pod.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: log-and-event-reader
+rules:
+# controlplane-mcp-server needs get/list on pods, pods/log, and events
+# in order to retrieve information for analysis.
+- apiGroups:
+  - ""
+  resources:
+  - events
+  - pods
+  - pods/log
+  verbs:
+  - get
+  - list
