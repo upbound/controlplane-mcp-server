@@ -4,7 +4,9 @@ metadata:
   annotations:
     friendly-name.meta.crossplane.io: AddOn ControlPlane MCP Server
     meta.crossplane.io/description: |
-      Upbound AddOn package deploys a single deploymentruntimeconfig
+      Upbound AddOn package that deploys a DeploymentRuntimeConfig including
+      the controlplane-mcp-server as well as supporting RBAC permissions for
+      use by an Upbound Intelligent Function.
     meta.crossplane.io/maintainer: Upbound Maintainers <info@upbound.io>
   name: controlplane-mcp-server
 spec:
