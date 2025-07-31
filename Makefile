@@ -53,6 +53,8 @@ GO_SUBDIRS = cmd
 GO_LINT_DIFF_TARGET ?= HEAD~
 GO_LINT_ARGS ?= --fix --new --new-from-rev=$(GO_LINT_DIFF_TARGET)
 GO_BUILD_TAG ?= default
+# For accessing private Go modules
+GITHUB_TOKEN ?= __unset__
 -include build/makelib/golang.mk
 
 # ====================================================================================
@@ -118,7 +120,7 @@ ko.publish: $(KO)
 	@$(INFO) building Go artifacts using ko
 	@for registry in $(REGISTRY_ORGS); do \
 		$(INFO) "Publishing to $$registry"; \
-			VERSION=$(VERSION) GO_BUILD_TAG=$(GO_BUILD_TAG) ./hack/helpers/kobuild.sh $$registry controlplane-mcp-server ./cmd/controlplane-mcp-server; \
+			VERSION=$(VERSION) GO_BUILD_TAG=$(GO_BUILD_TAG) GITHUB_TOKEN=$(GITHUB_TOKEN) ./hack/helpers/kobuild.sh $$registry controlplane-mcp-server ./cmd/controlplane-mcp-server; \
 		$(OK) "Published to $$registry"; \
 	done
 	@$(OK) built Go artifacts using ko

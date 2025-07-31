@@ -21,6 +21,11 @@ if [[ -n "$_bare" ]]; then
 fi
 echo $KO_DOCKER_REPO
 
+# Configure git for private module access
+git config --global url."https://${GITHUB_TOKEN}@github.com/".insteadOf "https://github.com/"
+go env -w GOPRIVATE=github.com/upbound/*
+go mod tidy
+
 # Build the target OCI artifact for the given $_go_import_path.
 # This script references the following attributes in order to accomplish this:
 # * KO_CONFIG_PATH: This is pointed to the .ko.yaml for the respective artifact
