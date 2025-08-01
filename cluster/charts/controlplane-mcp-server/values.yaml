@@ -8,6 +8,10 @@ serviceAccount:
   # The name of the service account to use.
   name: function-with-ctp-mcp
 
+# This section configures the HTTP server.
+server:
+  port: 8081
+
 # ExtraArgs to specify for the given container.
 extraArgs:
   # packageRuntime is the name of the crossplane function.

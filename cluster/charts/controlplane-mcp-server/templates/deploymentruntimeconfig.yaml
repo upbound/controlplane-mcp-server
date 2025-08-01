@@ -28,10 +28,14 @@ spec:
             # baseURL indicates which address and endpoint to reach out to for
             # tooling.
             - name: MCP_SERVER_TOOL_CTP1_BASEURL
-              value: http://localhost:8080/mcp
+              value: http://localhost:{{ .Values.server.port }}/mcp
           - name: controlplane-mcp-server
             image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default (ternary .Chart.AppVersion (printf "v%s" .Chart.AppVersion) (hasPrefix "v" .Chart.AppVersion)) }}"
             args:
-            {{- with .Values.extraArgs.controlplaneMcpServer }}
-              {{- toYaml . | nindent 12 }}
+            {{- $args := .Values.extraArgs.controlplaneMcpServer | default (list) }}
+            {{- range $args }}
+            {{- printf "- %q" . | nindent 12 }}
+            {{- end }}
+            {{- if .Values.server.port }}
+            {{- printf "- --port=:%v" .Values.server.port | nindent 12 }}
             {{- end }}

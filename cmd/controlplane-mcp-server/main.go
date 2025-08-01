@@ -39,7 +39,7 @@ type Command struct {
 	Debug   bool `default:"false" env:"DEBUG"    help:"Run with debug logging."   name:"debug"    short:"d"`
 	DevMode bool `default:"false" env:"DEV_MODE" help:"Enables logging dev mode." name:"dev-mode"`
 
-	Port       string `default:":8080" help:"Address to listen on."`
+	Port       string `default:":8081" help:"Address to listen on."                                                                          short:"p"`
 	Kubeconfig string `default:""      help:"Location of the kubeconfig to use for the API clients. Default is to use the incluster config."`
 }
 
