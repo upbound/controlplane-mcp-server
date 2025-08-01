@@ -1,5 +1,5 @@
 image:
-  repository: xpkg.upbound.io/upbound/controlplane-mcp-server
+  repository: xpkg.dev-deba7a0e.u6d.dev/upbound/controlplane-mcp-server
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
 
