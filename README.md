@@ -100,6 +100,7 @@ spec:
 ## Available Tools
 
 1. get_pod_logs
+
 Read the logs of the given container of the given Kubernetes pod in the given namespace.
 
 Parameters:
@@ -110,6 +111,7 @@ Parameters:
 read
 
 2. get_pod_events
+
 Read the events of the given Kubernetes pod in the given namespace.
 
 Parameters:
