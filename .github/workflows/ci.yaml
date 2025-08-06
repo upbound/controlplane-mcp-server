@@ -169,9 +169,12 @@ jobs:
       - publish-image
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
           submodules: true
+
+      - name: Fetch History
+        run: git fetch --prune --unshallow
 
       - name: Install up
         uses: upbound/action-up@v1
