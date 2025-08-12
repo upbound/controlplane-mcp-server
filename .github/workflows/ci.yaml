@@ -110,7 +110,7 @@ jobs:
       - detect-noop
       - unit-tests
       - lint
-    if: env.XPKG_ACCESS_ID != '' && ${{ github.actor != 'dependabot[bot]' && needs.detect-noop.outputs.noop != 'true' && !contains(github.ref, 'release-') }}
+    if: ${{ github.actor != 'dependabot[bot]' && needs.detect-noop.outputs.noop != 'true' && !contains(github.ref, 'release-') }}
     steps:
       - name: Setup QEMU
         uses: docker/setup-qemu-action@29109295f81e9208d7d86ff1c6c12d2833863392 # v3
@@ -147,6 +147,7 @@ jobs:
 
       - name: Login to Upbound Marketplace
         uses: docker/login-action@74a5d142397b4f367a81961eba4e8cd7edddf772 # v3
+        if: env.XPKG_ACCESS_ID != ''
         with:
           registry: xpkg.upbound.io/upbound
           username: ${{ secrets.XPKG_ACCESS_ID }}
@@ -155,6 +156,7 @@ jobs:
       - name: Publish Artifacts
         run: |
           make publish BRANCH_NAME=${GITHUB_REF##*/}
+        if: env.XPKG_ACCESS_ID != ''
         env:
           GO_BUILD_TAG: default
           XPKG_ACCESS_ID: ${{ secrets.XPKG_ACCESS_ID }}
@@ -186,16 +188,19 @@ jobs:
 
       - name: Login to Upbound Marketplace
         uses: docker/login-action@74a5d142397b4f367a81961eba4e8cd7edddf772 # v3
+        if: env.XPKG_ACCESS_ID != ''
         with:
           registry: xpkg.upbound.io/upbound
           username: ${{ secrets.XPKG_ACCESS_ID }}
           password: ${{ secrets.XPKG_ACCESS_TOKEN }}
 
       - name: Build chart
+        if: env.XPKG_ACCESS_ID != ''
         run: |
           make helm.build
 
       - name: Create working directory
+        if: env.XPKG_ACCESS_ID != ''
         run: |
           mkdir -p tmp-addon-xpkg
           cd tmp-addon-xpkg
